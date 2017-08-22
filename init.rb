@@ -7,4 +7,4 @@ Redmine::Plugin.register :redmine_out_of_band_auth do
   url 'https://github.com/auxlife/redmine_totp_auth/'
 end
 
-require_relative 'lib/out_of_band_auth'
+require_relative 'lib/totp_auth'
