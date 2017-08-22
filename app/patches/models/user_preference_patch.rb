@@ -1,6 +1,6 @@
 require_dependency 'user_preference'
 
-module OutOfBandAuth
+module TOTPAuth
   module UserPreferencePatch
     extend ActiveSupport::Concern
     unloadable
@@ -9,15 +9,15 @@ module OutOfBandAuth
       unloadable
       include Redmine::SafeAttributes
 
-      safe_attributes 'enabled_out_of_band_auth'
+      safe_attributes 'enabled_totp_auth'
     end
 
-    def enabled_out_of_band_auth; self[:enabled_out_of_band_auth] || '0'; end
-    def enabled_out_of_band_auth=(value); self[:enabled_out_of_band_auth]=value; end
+    def enabled_totp_auth; self[:enabled_totp_auth] || '0'; end
+    def enabled_totp_auth=(value); self[:enabled_totp_auth]=value; end
 
   end
 end
 
-OutOfBandAuth::UserPreferencePatch.tap do |mod|
+TOTPAuth::UserPreferencePatch.tap do |mod|
   UserPreference.send :include, mod unless UserPreference.include?(mod)
 end

@@ -1,6 +1,6 @@
 require_dependency 'user'
 
-module OutOfBandAuth
+module TOTPAuth
   module UserPatch
     extend ActiveSupport::Concern
     unloadable
@@ -8,35 +8,33 @@ module OutOfBandAuth
     included do
       unloadable
 
-      def enabled_out_of_band_auth?
-        self.pref.enabled_out_of_band_auth == '1'
+      def enabled_totp_auth?
+        self.pref.enabled_totp_auth == '1'
       end
 
-      def auth_source_out_of_band
-        AuthSourceOutOfBand.find_or_create_by(user_id: self.id)
+      def auth_source_totp
+        AuthSourceTOTP.find_or_create_by(user_id: self.id)
       end
 
-      def verification_code
-        self.auth_source_out_of_band.verification_code
+      def auth_secret
+        self.auth_source_totp.auth_secret
       end
 
-      def verification_code=(arg)
-        oob = self.auth_source_out_of_band
-        oob.verification_code = arg
+      def auth_secret=(arg)
+        oob = self.auth_source_totp
+        oob.auth_secret = arg
         oob.save
       end
 
-      def generate_verification_code
-        self.verification_code = (100000..999999).to_a.sample
+      def generate_auth_secret
+		self.auth_secret = ROTP::Base32.random_base32
       end
 
-      def clear_verification_code
-        self.verification_code = nil
-      end
 
       def valid_verification_code?(code)
         return false if code.blank?
-        return self.verification_code == code
+		totp = ROTP::TOTP.new(self.auth_secret)
+        return totp.verify(code)
       end
 
     end

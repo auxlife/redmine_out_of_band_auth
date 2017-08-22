@@ -1,4 +1,6 @@
-# Redmine Out of Band Auth (2 factor authentication, 2FA)
+# Redmine TOTP Auth (Time based One Time Password)
+
+Based on Redmine Out of Band Auth by matsukei.
 
 [![Build Status](https://travis-ci.org/matsukei/redmine_out_of_band_auth.svg?branch=master)](https://travis-ci.org/matsukei/redmine_out_of_band_auth)
 

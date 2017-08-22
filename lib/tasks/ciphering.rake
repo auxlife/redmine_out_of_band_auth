@@ -6,7 +6,7 @@ namespace :db do
   task encrypt: :environment do
     unless (Repository.encrypt_all(:password) &&
       AuthSource.encrypt_all(:account_password) &&
-      AuthSourceOutOfBand.encrypt_all(:verification_code))
+      AuthSourceTOTP.encrypt_all(:verification_code))
       raise "Some objects could not be saved after encryption, update was rolled back."
     end
   end
@@ -15,7 +15,7 @@ namespace :db do
   task decrypt: :environment do
     unless (Repository.decrypt_all(:password) &&
       AuthSource.decrypt_all(:account_password) &&
-      AuthSourceOutOfBand.decrypt_all(:verification_code))
+      AuthSourceTOTP.decrypt_all(:verification_code))
       raise "Some objects could not be saved after decryption, update was rolled back."
     end
   end

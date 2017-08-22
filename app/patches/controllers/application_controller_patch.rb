@@ -1,6 +1,6 @@
 require_dependency 'application_controller'
 
-module OutOfBandAuth
+module TOTPAuth
   module ApplicationControllerPatch
     extend ActiveSupport::Concern
     unloadable
@@ -8,17 +8,15 @@ module OutOfBandAuth
     included do
       unloadable
 
-      before_action :check_out_of_band_auth
+      before_action :check_totp_auth
 
-      def check_out_of_band_auth
+      def check_totp_auth
         return true if controller_name == 'account'
         return true if session[:pwd].present?
 
         if session[:oob]
-          if User.current.enabled_out_of_band_auth?
-
-            flash[:notice] = l(:notice_sent_verification_code, email: ERB::Util.h(User.current.mail))
-            redirect_to controller: 'out_of_band_auths', action: 'login'
+          if User.current.enabled_totp_auth?
+            redirect_to controller: 'totp_auths', action: 'login'
           else
             session.delete(:oob)
           end
