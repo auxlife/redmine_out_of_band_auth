@@ -41,6 +41,6 @@ module TOTPAuth
   end
 end
 
-OutOfBandAuth::UserPatch.tap do |mod|
+TOTPAuth::UserPatch.tap do |mod|
   User.send :include, mod unless User.include?(mod)
 end
