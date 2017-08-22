@@ -28,6 +28,6 @@ module TOTPAuth
   end
 end
 
-OutOfBandAuth::ApplicationControllerPatch.tap do |mod|
+TOTpPAuth::ApplicationControllerPatch.tap do |mod|
   ApplicationController.send :include, mod unless ApplicationController.include?(mod)
 end
