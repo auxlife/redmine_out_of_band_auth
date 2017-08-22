@@ -28,6 +28,6 @@ module TOTPAuth
   end
 end
 
-TOTpPAuth::ApplicationControllerPatch.tap do |mod|
+TOTPAuth::ApplicationControllerPatch.tap do |mod|
   ApplicationController.send :include, mod unless ApplicationController.include?(mod)
 end
