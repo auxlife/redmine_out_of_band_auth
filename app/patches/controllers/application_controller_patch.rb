@@ -14,11 +14,11 @@ module TotpAuth
         return true if controller_name == 'account'
         return true if session[:pwd].present?
 
-        if session[:oob]
+        if session[:totp]
           if User.current.enabled_totp_auth?
             redirect_to controller: 'totp_auths', action: 'login'
           else
-            session.delete(:oob)
+            session.delete(:totp)
           end
         end
       end

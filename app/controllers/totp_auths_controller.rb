@@ -1,12 +1,11 @@
 class TotpAuthsController < ApplicationController
   unloadable
-  # self.main_menu = false
   before_action :require_login
 
   skip_before_action :check_totp_auth
 
   def login
-    if session[:oob].present?
+    if session[:totp].present?
       totp_authentication if request.post?
     else
       redirect_back_or_default home_url, referer: true
@@ -16,12 +15,16 @@ class TotpAuthsController < ApplicationController
     render_error message: e.message
   end
 
+  def generate_as_uri()
+	AuthSourceTotp.generate_as_uri()
+  end
+  
   private
 
     def totp_authentication
       user = User.current
       if user.valid_verification_code?(params[:password])
-        session.delete(:oob)
+        session.delete(:totp)
 
         redirect_back_or_default my_page_path
       else

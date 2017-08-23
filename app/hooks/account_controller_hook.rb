@@ -4,7 +4,7 @@ module TotpAuth
       user, request = context.values_at(:user, :request)
 
       if user.enabled_totp_auth?
-        request.session[:oob] = '1'
+        request.session[:totp] = '1'
       end
     end
 

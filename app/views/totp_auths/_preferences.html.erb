@@ -1,3 +1,3 @@
 <%= labelled_fields_for :pref, user.pref do |pref_fields| %>
-  <p><%= pref_fields.check_box :enabled_totp_auth %> <% button_to "Generate and send GA URI", :method=> "generate_auth_secret" %></p>
+  <p><%= pref_fields.check_box :enabled_totp_auth %> <%= button_to "Generate and send GA URI", :method=> "generate_as_uri" %></p>
 <% end %>
