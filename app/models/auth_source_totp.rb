@@ -1,4 +1,4 @@
-class AuthSourceOutOfBand < ActiveRecord::Base
+class AuthSourceTOTP < ActiveRecord::Base
   include Redmine::Ciphering
 
   has_many :users
