@@ -1,6 +1,4 @@
 require_dependency 'user'
-require 'rubygems'
-require 'rotp'
 
 module TotpAuth
   module UserPatch
@@ -15,7 +13,7 @@ module TotpAuth
       end
 
       def auth_source_totp
-        AuthSourceTotp.find_or_create_by(user_id: self.id)
+        AuthSourceTotp.find(user_id: User.current.login)
       end
 
       def auth_secret
@@ -23,20 +21,30 @@ module TotpAuth
       end
 
       def auth_secret=(arg)
-        oob = self.auth_source_totp
-        oob.auth_secret = arg
-        oob.save
+        totp = self.auth_source_totp
+        totp.auth_secret = arg
+        totp.save
+      end
+	  
+	  def auth_uri=(arg)
+        totp = self.auth_source_totp
+        totp.uri = arg
+        totp.save
       end
 
       def generate_auth_secret
 		self.auth_secret = ROTP::Base32.random_base32
+		auth_secret(self.auth_secret)
+		rotp = ROTP::TOTP.new(self.auth_secret, issuer: "NIS Redmine")
+		auth_uri(rotp.provisioning_uri(User.current.email))
       end
 
 
       def valid_verification_code?(code)
         return false if code.blank?
-		totp = ROTP::TOTP.new(self.auth_secret)
-        return totp.verify(code)
+		return false if code.length != 6
+		rotp = ROTP::TOTP.new(self.auth_secret)
+        return rotp.verify(code)
       end
 
     end

@@ -26,7 +26,7 @@ class TotpAuthsController < ApplicationController
         redirect_back_or_default my_page_path
       else
         logger.warn "Failed OTP authentication for '#{User.current.login}' from #{request.remote_ip} at #{Time.now.utc}"
-        flash.now[:error] = "#{l(:field_verification_code)} #{l('activerecord.errors.messages.invalid')}"
+        flash.now[:error] = "The OTP #{l('activerecord.errors.messages.invalid')}"
       end
     end
 
