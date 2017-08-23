@@ -1,4 +1,4 @@
-class TOTPAuthsController < ApplicationController
+class TotpAuthsController < ApplicationController
   unloadable
   # self.main_menu = false
   before_action :require_login

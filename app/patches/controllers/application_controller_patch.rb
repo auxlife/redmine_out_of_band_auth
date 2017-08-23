@@ -1,6 +1,6 @@
 require_dependency 'application_controller'
 
-module TOTPAuth
+module TotpAuth
   module ApplicationControllerPatch
     extend ActiveSupport::Concern
     unloadable
@@ -28,6 +28,6 @@ module TOTPAuth
   end
 end
 
-TOTPAuth::ApplicationControllerPatch.tap do |mod|
+TotpAuth::ApplicationControllerPatch.tap do |mod|
   ApplicationController.send :include, mod unless ApplicationController.include?(mod)
 end

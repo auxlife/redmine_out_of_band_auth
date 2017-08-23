@@ -1,6 +1,6 @@
 require_dependency 'user'
 
-module TOTPAuth
+module TotpAuth
   module UserPatch
     extend ActiveSupport::Concern
     unloadable
@@ -13,7 +13,7 @@ module TOTPAuth
       end
 
       def auth_source_totp
-        AuthSourceTOTP.find_or_create_by(user_id: self.id)
+        AuthSourceTotp.find_or_create_by(user_id: self.id)
       end
 
       def auth_secret
@@ -41,6 +41,6 @@ module TOTPAuth
   end
 end
 
-TOTPAuth::UserPatch.tap do |mod|
+TotpAuth::UserPatch.tap do |mod|
   User.send :include, mod unless User.include?(mod)
 end

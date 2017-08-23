@@ -1,6 +1,6 @@
 require_dependency 'user_preference'
 
-module TOTPAuth
+module TotpAuth
   module UserPreferencePatch
     extend ActiveSupport::Concern
     unloadable
@@ -18,6 +18,6 @@ module TOTPAuth
   end
 end
 
-TOTPAuth::UserPreferencePatch.tap do |mod|
+TotpAuth::UserPreferencePatch.tap do |mod|
   UserPreference.send :include, mod unless UserPreference.include?(mod)
 end

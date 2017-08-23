@@ -1,4 +1,4 @@
-class AuthSourceTOTP < ActiveRecord::Base
+class AuthSourceTotp < ActiveRecord::Base
   include Redmine::Ciphering
 
   has_many :users
