@@ -1,4 +1,6 @@
 require_dependency 'user'
+require 'rubygems'
+require 'rotp'
 
 module TotpAuth
   module UserPatch
