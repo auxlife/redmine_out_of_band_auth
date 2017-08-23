@@ -13,7 +13,7 @@ module TotpAuth
       end
 
       def auth_source_totp
-        AuthSourceTotp.find(user_id: User.current.login)
+        AuthSourceTotp.find_by(user_id: User.current.login)
       end
 
       def auth_secret
